@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Account Settings</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0e153a;
+      color: white;
+      padding-bottom: 80px;
+    }
+
+    .container {
+      max-width: 414px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .section {
+      background: #1f2a52;
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    .profile-pic {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .profile-pic img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .change-btn {
+      background: #00e676;
+      border: none;
+      color: #0e153a;
+      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .input-group label {
+      font-size: 14px;
+      color: #cbd3f2;
+    }
+
+    .input-group input {
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background-color: #101938;
+      color: white;
+      font-size: 15px;
+    }
+
+  
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background-color: rgba(11, 17, 40, 0.5);
+      padding: 10px 0;
+      border-top: 1px solid #1c223e;
+    }
+
+    .nav-icon {
+      font-size: 24px;
+      color: white;
+      text-decoration: none;
+    }
+
+    .plus-button {
+      background-color: #00e676;
+      color: white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      line-height: 50px;
+      font-size: 28px;
+      box-shadow: 0px 0px 10px #00e676;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>👤 Account Settings</h2>
+
+    <!-- Profile Picture -->
+    <div class="section">
+      <div class="section-title">Profile</div>
+      <div class="profile-pic">
+        <img src="profile_pictures/IMG_9353.PNG" alt="Profile" id="profilePreview">
+        <label class="change-btn">
+          Change
+          <input type="file" accept="image/*" id="profileInput" style="display:none">
+        </label>
+      </div>
+    </div>
+
+    <!-- Username & Password -->
+    <div class="section">
+      <div class="section-title">Account Info</div>
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Enter new username">
+      </div>
+      <div class="input-group">
+        <label for="password">New Password</label>
+        <input type="password" id="password" placeholder="Enter new password">
+      </div>
+      <button class="change-btn">Update Info</button>
+    </div>
+
+    <!-- Withdrawal Settings -->
+    <div class="section">
+      <div class="section-title">Withdrawal Method</div>
+      <div class="input-group">
+        <label for="method">Select Method</label>
+        <input type="text" id="method" placeholder="e.g., PayPal, Bank, M-Pesa">
+      </div>
+      <div class="input-group">
+        <label for="account">Account Details</label>
+        <input type="text" id="account" placeholder="e.g., user@example.com">
+      </div>
+      <button class="change-btn">Save Method</button>
+    </div>
+
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <a class="nav-icon" href="index.html">🏠</a>
+    <a class="nav-icon" href="notification.html">🔔</a>
+    <div class="plus-button">+</div>
+    <a class="nav-icon" href="help.html">🆘</a>
+    <a class="nav-icon" href="account.html">👤</a>
+  </div>
+
+  <script>
+    const profileInput = document.getElementById("profileInput");
+    const profilePreview = document.getElementById("profilePreview");
+
+    profileInput.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        profilePreview.src = URL.createObjectURL(file);
+      }
+    });
+  </script>
+</body>
+</html>

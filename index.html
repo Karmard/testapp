@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wallet App Homepage</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0e153a;
+      color: white;
+      padding-top: 30px;
+    }
+
+    .container {
+      max-width: 414px;
+      padding: 30px 20px 20px 20px;
+      margin: auto;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .greeting {
+      font-size: 20px;
+    }
+
+    .balance-card {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      padding: 20px;
+      border-radius: 20px;
+      margin: 60px 0;
+      text-align: center;
+    }
+
+    .balance-card h2 {
+      font-size: 32px;
+      margin: 10px 0;
+    }
+
+    .income-expense {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    .income,
+    .expense {
+      font-size: 14px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      margin: 90px 0 10px;
+    }
+
+    .transaction {
+      background-color: #1f2a52;
+      padding: 15px;
+      border-radius: 15px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .transaction-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .transaction-title {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .transaction-subtitle {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    .transaction-amount {
+      font-size: 16px;
+      color: #2cf812;
+    }
+
+    .transaction-info img {
+      width: 60px;
+      height: 60px;
+      filter: blur(4px);
+      border-radius: 8px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background-color: rgba(11, 17, 40, 0.5);
+      padding: 10px 0;
+      border-top: 1px solid #1c223e;
+    }
+
+    .nav-icon {
+      font-size: 24px;
+      color: white;
+      text-decoration: none; /* Fix underline */
+    }
+
+    .plus-button {
+      background-color: #00e676;
+      color: white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      line-height: 50px;
+      font-size: 28px;
+      box-shadow: 0px 0px 10px #00e676;
+    }
+
+    .modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 16px;
+  z-index: 1001;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-box {
+  background: #1f2a52;
+  padding: 25px 20px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 340px;
+  box-shadow: 0 0 20px rgba(0, 230, 118, 0.3);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-close {
+  font-size: 20px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+  transition: color 0.2s ease;
+}
+
+.modal-close:hover {
+  color: #ff4c4c;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-label {
+  font-size: 16px;
+  color: #b0b8d1;
+}
+
+.modal-input {
+  padding: 12px;
+  border: 1px solid #3a466c;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #101938;
+  color: white;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.modal-input:focus {
+  border-color: #00e676;
+}
+
+.modal-button {
+  padding: 12px;
+  background: #00e676;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #0e153a;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.modal-button:hover {
+  background: #00c765;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+  .action-btns {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn {
+      flex: 1;
+      background: #2575fc;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn.withdraw {
+      background: #ff5252;
+    }
+
+    .btn:hover 
+    {
+      opacity: 0.9;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="header">
+      <div style="display: flex; align-items: center;">
+        <img src="profile_pictures/IMG_9353.PNG" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+        <div class="greeting">👋 Hello, <strong>Bulimo</strong></div>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <div id="scan-btn" style="cursor:pointer;" title="Scan QR Code">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="30" height="30">
+            <rect x="3" y="3" width="6" height="6" stroke="white" stroke-width="2" fill="none" />
+            <rect x="15" y="3" width="6" height="6" stroke="white" stroke-width="2" fill="none" />
+            <rect x="3" y="15" width="6" height="6" stroke="white" stroke-width="2" fill="none" />
+            <rect x="10" y="10" width="4" height="4" fill="white" />
+            <rect x="16" y="16" width="2" height="2" fill="white" />
+          </svg>
+        </div>
+
+        <div id="redeem-btn" style="cursor:pointer;" title="Redeem Code">
+          <span style="font-size: 26px;">🎟️</span>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="balance-card">
+      <div>Total Balance</div>
+      <h2>$5,473.00</h2>
+      <div class="income-expense">
+        <div class="income">📈 Received<br>$3,365.00</div>
+        <div class="expense">📉 Sent<br>$940.00</div>
+      </div>
+
+      <div class="action-btns">
+      <button class="btn deposit">💰 Deposit</button>
+      <button class="btn withdraw">💸 Withdraw</button>
+    </div>
+    </div>
+
+    <div class="section-title">Active Codes</div>
+
+    <!-- Hidden Unique Code -->
+    <div class="transaction">
+      <div class="transaction-info">
+        <div class="transaction-title"><strong>XA29-****-****</strong></div>
+      </div>
+      <div class="transaction-amount">Active</div>
+    </div>
+
+    <!-- Blurred QR Code -->
+    <div class="transaction">
+      <div class="transaction-info">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=https://example.com/redeem?id=XA29"
+             alt="QR Code" />
+      </div>
+      <div class="transaction-amount">Active</div>
+    </div>
+
+    <!-- Hidden Unique Code -->
+    <div class="transaction">
+      <div class="transaction-info">
+        <div class="transaction-title"><strong>WQP1-****-****</strong></div>
+      </div>
+      <div class="transaction-amount">Active</div>
+    </div>
+
+    <!-- Blurred QR Code -->
+    <div class="transaction">
+      <div class="transaction-info">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=https://example.com/redeem?id=WQP1"
+             alt="QR Code" />
+      </div>
+      <div class="transaction-amount">Active</div>
+    </div>
+
+    <div id="camera-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); color:white; font-size:24px; 
+      align-items:center; justify-content:center; z-index:1000;">
+      <div>
+        <div style="text-align:right; margin-bottom: 20px;">
+          <button id="close-camera" style="font-size:24px; cursor:pointer;">✖ Close</button>
+        </div>
+          Ooops! Cant Open camera now, still under development
+      </div>
+    </div>
+
+    <div id="redeem-modal" class="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-header">
+          <button id="close-redeem" class="modal-close">✖</button>
+        </div>
+        <div class="modal-body">
+          <label for="code-input" class="modal-label">Enter your unique code:</label>
+          <input type="text" id="code-input" class="modal-input" placeholder="e.g., XA29-XXXX-XXXX" />
+          <button id="submit-code" class="modal-button">🎟️ Redeem</button>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- Close container -->
+
+  <div class="bottom-nav">
+    <a class="nav-icon" href="index.html">🏠</a>
+    <a class="nav-icon" href="notification.html">🔔</a>
+    <div class="plus-button">+</div>
+    <a class="nav-icon" href="help.html">🆘</a>
+    <a class="nav-icon" href=account.html>👤</a>
+  </div>
+
+<script>
+  const scanBtn = document.getElementById('scan-btn');
+  const cameraModal = document.getElementById('camera-modal');
+  const closeCamera = document.getElementById('close-camera');
+
+  const redeemBtn = document.getElementById('redeem-btn');
+  const redeemModal = document.getElementById('redeem-modal');
+  const closeRedeem = document.getElementById('close-redeem');
+  const submitCode = document.getElementById('submit-code');
+
+  scanBtn.addEventListener('click', () => {
+    cameraModal.style.display = 'flex';
+  });
+
+  closeCamera.addEventListener('click', () => {
+    cameraModal.style.display = 'none';
+  });
+
+  redeemBtn.addEventListener('click', () => {
+    redeemModal.style.display = 'flex';
+  });
+
+  closeRedeem.addEventListener('click', () => {
+    redeemModal.style.display = 'none';
+  });
+
+  submitCode.addEventListener('click', () => {
+    const code = document.getElementById('code-input').value;
+    if (code.trim() === "") {
+      alert("Please enter a code.");
+    } else {
+      alert(`Redeeming code: ${code}`);
+      // TODO: Implement actual redemption logic here
+      redeemModal.style.display = 'none';
+    }
+  });
+</script>
+
+</body>
+</html>
